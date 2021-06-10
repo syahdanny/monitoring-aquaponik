@@ -163,7 +163,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
-                            android:id="@+id/textSuhu"
+                            android:id="@+id/textKetinggian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0 cm"
@@ -173,7 +173,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/forSuhu"
+                        android:id="@+id/forPompa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -187,7 +187,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Suhu"
+                            android:text="Status Pompa"
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp"/>
 
@@ -195,7 +195,7 @@
                             android:id="@+id/textKelembaban"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 C"
+                            android:text="Aktif"
                             android:textColor="@color/colorWhite"
                             android:textSize="42sp"/>
 
@@ -255,7 +255,8 @@
                     android:textColor="@color/colorBlack"
                     android:text="History"
                     android:textSize="18sp"
-                    android:layout_margin="8dp"/>
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
