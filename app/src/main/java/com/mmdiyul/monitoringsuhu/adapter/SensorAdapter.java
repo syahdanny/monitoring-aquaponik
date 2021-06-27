@@ -36,9 +36,10 @@ public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull SensorAdapter.MyViewHolder holder, int position) {
         Sensor sensor = sensorList.get(position);
-        holder.tanggal.setText(String.valueOf(sensor.getUpdate()));
-        holder.suhu.setText(String.valueOf(sensor.getSuhu()));
-        holder.kelembaban.setText(String.valueOf(sensor.getKelembaban()));
+        holder.ketinggian.setText(String.valueOf(sensor.getKetinggian()));
+        holder.kekeruhan.setText(String.valueOf(sensor.getKekeruhan()));
+        holder.pH.setText(String.valueOf(sensor.getpH()));
+        holder.update.setText(String.valueOf(sensor.getUpdate()));
     }
 
     @Override
@@ -47,13 +48,14 @@ public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tanggal, suhu, kelembaban;
+        public TextView ketinggian, kekeruhan, pH, update;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.tanggal = itemView.findViewById(R.id.tanggal);
-            this.suhu = itemView.findViewById(R.id.suhu);
-            this.kelembaban = itemView.findViewById(R.id.kelembaban);
+            this.ketinggian = itemView.findViewById(R.id.ketinggian);
+            this.kekeruhan = itemView.findViewById(R.id.kekeruhan);
+            this.pH = itemView.findViewById(R.id.pH);
+            this.update = itemView.findViewById(R.id.update);
         }
     }
 }

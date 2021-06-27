@@ -2,27 +2,33 @@ package com.mmdiyul.monitoringsuhu.model;
 
 public class Sensor {
     private int id;
-    private double suhu;
-    private double kelembaban;
+    private int ketinggian;
+    private float kekeruhan;
+    private float pH;
     private String update;
 
-    public Sensor(int id, double suhu, double kelembaban, String update) {
-        this.id = id;
-        this.suhu = suhu;
-        this.kelembaban = kelembaban;
+    public Sensor(int ketinggian, float kekeruhan, float pH, String update) {
+//        this.id = id;
+        this.ketinggian = ketinggian;
+        this.kekeruhan = kekeruhan;
+        this.pH = pH;
         this.update = update;
     }
 
-    public int getId() {
-        return id;
+//    public int getId() {
+//        return id;
+//    }
+
+    public int getKetinggian() {
+        return ketinggian;
     }
 
-    public double getKelembaban() {
-        return kelembaban;
+    public float getKekeruhan() {
+        return kekeruhan;
     }
 
-    public double getSuhu() {
-        return suhu;
+    public float getpH() {
+        return pH;
     }
 
     public String getUpdate() {

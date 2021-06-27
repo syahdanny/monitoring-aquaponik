@@ -1,15 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tanggal"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tanggal"
-        android:textSize="16sp"/>
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ketinggian: "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/ketinggian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" cm"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kekeruhan: "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/kekeruhan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" NTU"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,60 +80,60 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:layout_weight="1">
+            android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Suhu: "/>
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/suhu"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="pH: "
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/pH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" pH"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="100"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"/>
+                android:layout_weight="1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"
-                android:text=" C"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update: "
+                    android:textSize="15sp" />
 
+                <TextView
+                    android:id="@+id/update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Senin, 00:00:00"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Kelembaban: "/>
-
-            <TextView
-                android:id="@+id/kelembaban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"
-                android:text=" %"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

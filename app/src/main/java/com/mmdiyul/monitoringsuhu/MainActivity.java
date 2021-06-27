@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -42,20 +41,22 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView greetings;
-    private TextView textSuhu;
-    private TextView textKelembaban;
+    private TextView textKekeruhan;
+    private TextView textKetinggian;
+    private TextView textpH;
     private TextView textUpdate;
-    private TextView textAlert;
-    private LinearLayout layoutAlert;
+//    private TextView textAlert;
+//    private LinearLayout layoutAlert;
     private LineChart lineChart;
 
     private DatabaseReference databaseReference;
 
-    private int id;
-    private double suhu;
-    private double kelembaban;
+//    private int id;
+    private int ketinggian;
+    private float kekeruhan;
+    private float pH;
     private String update;
-    private double minSuhu, maxSuhu, minKelembaban, maxKelembaban;
+    private double minKetinggian, maxKetinggian, minKekeruhan, maxKekeruhan, minpH, maxpH;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ScrollView scrollView;
@@ -71,15 +72,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // bind
         greetings = findViewById(R.id.greetings);
-        textSuhu = findViewById(R.id.textSuhu);
-        textKelembaban = findViewById(R.id.textKelembaban);
+        textKetinggian = findViewById(R.id.textKetinggian);
+        textKekeruhan = findViewById(R.id.textKekeruhan);
+        textpH = findViewById(R.id.textpH);
         textUpdate = findViewById(R.id.textUpdate);
-        textAlert = findViewById(R.id.textAlert);
+//        textAlert = findViewById(R.id.textAlert);
+//        layoutAlert = findViewById(R.id.forAlert);
         swipeRefreshLayout = findViewById(R.id.refresh);
         scrollView = findViewById(R.id.scrollView);
-        layoutAlert = findViewById(R.id.forAlert);
         recyclerView = findViewById(R.id.recyclerView);
 
         // ucapan selamat berdasarkan waktu.
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         // Database
         databaseReference = FirebaseDatabase.getInstance().getReference();
         // last data
+
         Query lastData = databaseReference.child("sensor");
         lastData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 long lengthData = dataSnapshot.getChildrenCount();
                 long lastChild = lengthData - 1;
                 try {
-                    suhu = Double.parseDouble(dataSnapshot.child(lastChild + "/suhu").getValue().toString());
-                    kelembaban = Double.parseDouble(dataSnapshot.child(lastChild + "/kelembaban").getValue().toString());
-                    update = dataSnapshot.child(lastChild + "/updatedAt").getValue().toString();
+                    ketinggian = Integer.parseInt(dataSnapshot.child(lastChild + "/ketinggian").getValue().toString());
+                    kekeruhan = Float.parseFloat(dataSnapshot.child(lastChild + "/kekeruhan").getValue().toString());
+                    pH = Float.parseFloat(dataSnapshot.child(lastChild + "/pH").getValue().toString());
+                    update = dataSnapshot.child(lastChild + "/update").getValue().toString();
 
-                    textSuhu.setText(suhu + " C");
-                    textKelembaban.setText(kelembaban + " %");
+                    textKetinggian.setText(ketinggian + " cm");
+                    textKekeruhan.setText(kekeruhan + " NTU");
+                    textpH.setText(pH + " pH");
                     textUpdate.setText("Last update : " +update);
                 } catch (NullPointerException nullPointer) {
                     Log.d("Error: ", nullPointer.getMessage());
@@ -117,54 +123,70 @@ public class MainActivity extends AppCompatActivity {
 
                 while (index != 10) {
                     try {
-                        id = Integer.parseInt(dataSnapshot.child(lastChild + "/id").getValue().toString());
-                        suhu = Double.parseDouble(dataSnapshot.child(lastChild + "/suhu").getValue().toString());
-                        kelembaban = Double.parseDouble(dataSnapshot.child(lastChild + "/kelembaban").getValue().toString());
-                        update = dataSnapshot.child(lastChild + "/updatedAt").getValue().toString();
+//                        id = index;
+                        ketinggian = Integer.parseInt(dataSnapshot.child(lastChild + "/ketinggian").getValue().toString());
+                        kekeruhan = Float.parseFloat(dataSnapshot.child(lastChild + "/kekeruhan").getValue().toString());
+                        pH = Float.parseFloat(dataSnapshot.child(lastChild + "/pH").getValue().toString());
+                        update = dataSnapshot.child(lastChild + "/update").getValue().toString();
 
-                        sensorList.add(new Sensor(id, suhu, kelembaban, update));
+                        sensorList.add(new Sensor(ketinggian, kekeruhan, pH, update));
+
+
+                        Log.d("aaas", String.valueOf(ketinggian));
+                        Log.d("aaas", String.valueOf(kekeruhan));
+                        Log.d("aaas", String.valueOf(pH));
+                        Log.d("aaas", String.valueOf(update));
+
                         index++;
                         lastChild--;
                     } catch (NullPointerException nullPointer) {
                         Log.d("Error: ", nullPointer.getMessage());
                     }
+
                 }
+
+
+//                Log.d("aaa", String.valueOf(sensorAdapter.getItemCount()));
+//                    Log.d("aaa", String.valueOf(sensorList));
 
 
                 DatabaseReference settings = FirebaseDatabase.getInstance().getReference().child("settings");
                 settings.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        minSuhu = Double.parseDouble(dataSnapshot.child("minSuhu").getValue().toString());
-                        maxSuhu = Double.parseDouble(dataSnapshot.child("maxSuhu").getValue().toString());
-                        minKelembaban = Double.parseDouble(dataSnapshot.child("minKelembaban").getValue().toString());
-                        maxKelembaban = Double.parseDouble(dataSnapshot.child("maxKelembaban").getValue().toString());
 
-                        if (suhu < minSuhu) {
-                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
-                            textAlert.setText("Suhu kurang dari batas minimum!");
-                            if (kelembaban < minKelembaban) {
-                                textAlert.setText("Suhu dan kelembaban kurang dari batas minimum!");
-                            } else if (kelembaban > maxKelembaban) {
-                                textAlert.setText("Suhu kurang dari batas minimum dan kelembaban lebih dari batas maksimum!");
-                            }
-                        } else if (suhu > maxSuhu) {
-                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
-                            textAlert.setText("Suhu lebih dari batas maksimum!");
-                            if (kelembaban < minKelembaban) {
-                                textAlert.setText("Suhu lebih dari batas maksimum dan kelembaban kurang dari batas minimum!");
-                            } else if (kelembaban > maxKelembaban) {
-                                textAlert.setText("Suhu dan kelembaban lebih dari batas maksimum!");
-                            }
-                        } else if (kelembaban < minKelembaban) {
-                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
-                            textAlert.setText("Kelembaban kurang dari batas minimum!");
-                        } else if (kelembaban > maxKelembaban) {
-                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
-                            textAlert.setText("Kelembaban lebih dari batas maksimum!");
-                        } else {
-                            layoutAlert.setVisibility(LinearLayout.INVISIBLE);
-                        }
+//                        minKetinggian = Double.parseDouble(dataSnapshot.child("minKetinggian").getValue().toString());
+//                        maxKetinggian = Double.parseDouble(dataSnapshot.child("maxKetinggian").getValue().toString());
+//                        minKekeruhan = Double.parseDouble(dataSnapshot.child("minKekeruhan").getValue().toString());
+//                        maxKekeruhan = Double.parseDouble(dataSnapshot.child("maxKekeruhan").getValue().toString());
+//                        minpH = Double.parseDouble(dataSnapshot.child("minpH").getValue().toString());
+//                        maxpH = Double.parseDouble(dataSnapshot.child("maxpH").getValue().toString());
+
+//                        if (suhu < minSuhu) {
+//                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
+//                            textAlert.setText("Suhu kurang dari batas minimum!");
+//                            if (kelembaban < minKelembaban) {
+//                                textAlert.setText("Suhu dan kelembaban kurang dari batas minimum!");
+//                            } else if (kelembaban > maxKelembaban) {
+//                                textAlert.setText("Suhu kurang dari batas minimum dan kelembaban lebih dari batas maksimum!");
+//                            }
+//                        } else if (suhu > maxSuhu) {
+//                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
+//                            textAlert.setText("Suhu lebih dari batas maksimum!");
+//                            if (kelembaban < minKelembaban) {
+//                                textAlert.setText("Suhu lebih dari batas maksimum dan kelembaban kurang dari batas minimum!");
+//                            } else if (kelembaban > maxKelembaban) {
+//                                textAlert.setText("Suhu dan kelembaban lebih dari batas maksimum!");
+//                            }
+//                        } else if (kelembaban < minKelembaban) {
+//                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
+//                            textAlert.setText("Kelembaban kurang dari batas minimum!");
+//                        } else if (kelembaban > maxKelembaban) {
+//                            layoutAlert.setVisibility(LinearLayout.VISIBLE);
+//                            textAlert.setText("Kelembaban lebih dari batas maksimum!");
+//                        } else {
+//                            layoutAlert.setVisibility(LinearLayout.INVISIBLE);
+//                        }
                     }
 
                     @Override
@@ -173,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -214,20 +237,22 @@ public class MainActivity extends AppCompatActivity {
         // set recycler
         this.recyclerView = findViewById(R.id.recyclerView);
         sensorAdapter = new SensorAdapter(sensorList, this);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);git
+        Log.d("sensor", String.valueOf(sensorAdapter));
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.line));
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(sensorAdapter);
 
+
         //chart
         lineChart = (LineChart)findViewById(R.id.chart);
-        LineDataSet lineDataSet = new LineDataSet(getData(), "Inducesmile");
+        LineDataSet lineDataSet = new LineDataSet(getData(), "Pompa");
         lineDataSet.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         lineDataSet.setValueTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final String[] months = new String[]{"Jan", "Feb", "Mar", "Apr"};
+        final String[] months = new String[]{"Apr", "May", "Jun", "Jul"};
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {

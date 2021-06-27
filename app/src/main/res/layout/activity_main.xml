@@ -71,6 +71,7 @@
 
                 <LinearLayout
                     android:id="@+id/kekeruhanpH"
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="2"
@@ -101,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:text="0 NTU"
                             android:textColor="@color/colorWhite"
-                            android:textSize="42sp"/>
+                            android:textSize="30sp"/>
 
                     </LinearLayout>
 
@@ -130,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:text="0 pH"
                             android:textColor="@color/colorWhite"
-                            android:textSize="42sp"/>
+                            android:textSize="30sp"/>
 
                     </LinearLayout>
 
@@ -168,7 +169,7 @@
                             android:layout_height="wrap_content"
                             android:text="0 cm"
                             android:textColor="@color/colorWhite"
-                            android:textSize="42sp"/>
+                            android:textSize="30sp"/>
 
                     </LinearLayout>
 
@@ -197,7 +198,7 @@
                             android:layout_height="wrap_content"
                             android:text="Aktif"
                             android:textColor="@color/colorWhite"
-                            android:textSize="42sp"/>
+                            android:textSize="30sp"/>
 
                     </LinearLayout>
 
@@ -226,27 +227,27 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/forAlert"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:padding="16dp"
-                    android:background="@drawable/shape_rounded_red"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/forUpdatea"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:layout_marginRight="8dp"-->
+<!--                    android:layout_marginLeft="8dp"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:background="@drawable/shape_rounded_red"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_weight="1">-->
 
-                    <TextView
-                        android:id="@+id/textAlert"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alert"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/textAlert"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Alert"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:textSize="16sp"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="match_parent"
@@ -258,10 +259,11 @@
                     android:layout_margin="8dp"
                     android:gravity="center_horizontal" />
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="600dp"
                     android:layout_margin="8dp"/>
 
             </LinearLayout>
