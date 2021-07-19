@@ -193,10 +193,10 @@
                             android:textSize="16sp"/>
 
                         <TextView
-                            android:id="@+id/textKelembaban"
+                            android:id="@+id/textStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Aktif"
+                            android:text="Hidup"
                             android:textColor="@color/colorWhite"
                             android:textSize="30sp"/>
 

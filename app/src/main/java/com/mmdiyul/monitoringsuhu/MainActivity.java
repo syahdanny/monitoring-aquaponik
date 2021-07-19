@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textKetinggian;
     private TextView textpH;
     private TextView textUpdate;
+    private TextView textStatus;
 //    private TextView textAlert;
 //    private LinearLayout layoutAlert;
     private LineChart lineChart;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private float kekeruhan;
     private float pH;
     private String update;
-    private double minKetinggian, maxKetinggian, minKekeruhan, maxKekeruhan, minpH, maxpH;
+    private int status;
+//    private double minKetinggian, maxKetinggian, minKekeruhan, maxKekeruhan, minpH, maxpH;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ScrollView scrollView;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         textKekeruhan = findViewById(R.id.textKekeruhan);
         textpH = findViewById(R.id.textpH);
         textUpdate = findViewById(R.id.textUpdate);
+        textStatus = findViewById(R.id.textStatus);
 //        textAlert = findViewById(R.id.textAlert);
 //        layoutAlert = findViewById(R.id.forAlert);
         swipeRefreshLayout = findViewById(R.id.refresh);
@@ -150,12 +153,20 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("aaa", String.valueOf(sensorList));
 
 
-                DatabaseReference settings = FirebaseDatabase.getInstance().getReference().child("settings");
-                settings.addValueEventListener(new ValueEventListener() {
+                DatabaseReference pompa = FirebaseDatabase.getInstance().getReference().child("pompa");
+                pompa.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        status = Integer.parseInt(dataSnapshot.child("status").getValue().toString());
+                        Log.d("aaax", String.valueOf(status));
+                        if (status == 0) {
+                            textStatus.setText("Mati");
+                        } else if (status == 1) {
+                            textStatus.setText("Hidup");
+                        } else {
+                            textStatus.setText("N/A");
+                        }
 
-//                        minKetinggian = Double.parseDouble(dataSnapshot.child("minKetinggian").getValue().toString());
 //                        maxKetinggian = Double.parseDouble(dataSnapshot.child("maxKetinggian").getValue().toString());
 //                        minKekeruhan = Double.parseDouble(dataSnapshot.child("minKekeruhan").getValue().toString());
 //                        maxKekeruhan = Double.parseDouble(dataSnapshot.child("maxKekeruhan").getValue().toString());
